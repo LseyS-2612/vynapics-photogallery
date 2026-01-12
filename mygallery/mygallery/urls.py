@@ -12,7 +12,7 @@ urlpatterns = [
     path('profile/', photo_views.profile, name='profile'),
     path('signup/', photo_views.signup_view, name='signup'),
     
-    # Django'nun hazır Login/Logout sistemi
+
     path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='gallery'), name='logout'),
     

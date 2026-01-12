@@ -16,7 +16,7 @@
             min-height: 100vh;
         }
         
-        /* Profil Başlık Alanı */
+
         .profile-header {
             text-align: center;
             margin-bottom: 40px;
@@ -44,7 +44,7 @@
         .btn-upload { background: white; color: #112d20; }
         .btn-upload:hover { background: #e0e0e0; transform: translateY(-2px); }
 
-        /* Galeri Düzeni */
+
         .gallery {
             column-count: 5;
             column-gap: 20px;
@@ -52,11 +52,11 @@
             margin: 0 auto;
         }
 
-        /* Fotoğraf Kartı */
+
         .photo-card {
             break-inside: avoid;
             margin-bottom: 20px;
-            position: relative; /* İkonları yerleştirmek için gerekli */
+            position: relative;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
@@ -65,7 +65,7 @@
         .photo-card:hover { transform: translateY(-5px); }
         .photo-card img { width: 100%; display: block; }
 
-        /* YENİ: Fotoğraf Üzerindeki İkonlar (Gizli Başlar) */
+
         .photo-actions {
             position: absolute;
             top: 10px;
@@ -76,12 +76,12 @@
             transition: opacity 0.3s ease;
         }
         
-        /* Mouse üzerine gelince ikonlar görünsün */
+
         .photo-card:hover .photo-actions { opacity: 1; }
 
-        /* İkon Butonlarının Stili */
+
         .action-btn {
-            background: rgba(0, 0, 0, 0.6); /* Yarı saydam siyah */
+            background: rgba(0, 0, 0, 0.6); 
             color: white;
             border: none;
             width: 35px; height: 35px;
@@ -92,9 +92,9 @@
             transition: all 0.2s;
         }
         .action-btn:hover { background: rgba(255, 255, 255, 0.9); color: #112d20; }
-        .action-btn.delete:hover { background: #c0392b; color: white; } /* Silme butonu kırmızı olsun */
+        .action-btn.delete:hover { background: #c0392b; color: white; } 
 
-        /* Mobil */
+
         @media (max-width: 1024px) { .gallery { column-count: 3; } }
         @media (max-width: 600px) { .gallery { column-count: 2; } }
     </style>

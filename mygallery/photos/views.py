@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 
-# 1. Ana Galeri Görünümü
+
 def gallery(request):
     category = request.GET.get('category')
     if category == None:
@@ -18,22 +18,22 @@ def gallery(request):
     hero_photos = Photo.objects.all().order_by('-created_at')[:5]
     # --------------------------
 
-    # hero_photos'u context'e ekle
+
     context = {
         'categories': categories,
         'photos': photos,
-        'hero_photos': hero_photos, # <-- BURAYA EKLEDİK
+        'hero_photos': hero_photos,
     }
     return render(request, 'gallery.html', context)
     context = {'categories': categories, 'photos': photos}
     return render(request, 'gallery.html', context)
 
-# 2. Tek Fotoğraf Görünümü (İsteğe bağlı, şu an Lightbox kullanıyoruz)
+
 def view_photo(request, pk):
     photo = Photo.objects.get(id=pk)
     return render(request, 'photo.html', {'photo': photo})
 
-# 3. Fotoğraf Yükleme
+
 @login_required(login_url='login')
 def add_photo(request):
     categories = Category.objects.all()
@@ -48,13 +48,13 @@ def add_photo(request):
         form = PhotoForm()
     return render(request, 'add.html', {'form': form, 'categories': categories})
 
-# 4. Profil Sayfası
+
 @login_required(login_url='login')
 def profile(request):
     photos = Photo.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'profile.html', {'photos': photos})
 
-# 5. Kayıt Olma
+
 def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -66,7 +66,7 @@ def signup_view(request):
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
-# 6. Fotoğraf Silme (BURASI EKSİKTİ)
+
 @login_required(login_url='login')
 def delete_photo(request, pk):
     photo = get_object_or_404(Photo, id=pk)
@@ -74,7 +74,7 @@ def delete_photo(request, pk):
         photo.delete()
     return redirect('profile')
 
-# 7. Fotoğraf Düzenleme
+
 @login_required(login_url='login')
 def edit_photo(request, pk):
     photo = get_object_or_404(Photo, id=pk)

@@ -64,7 +64,7 @@
         }
         .btn-primary:hover { background-color: #ddd; transform: translateY(-1px); }
 
-        /* HERO SECTION (Animasyonlu Arka Plan) */
+
         .hero {
             position: relative;
             height: 300px;  /* ESKİSİ: 450px idi. 300px yaptık. */
@@ -80,7 +80,7 @@
             overflow: hidden;
         }
 
-        /* Siyah Perde (Kararma Efekti İçin) */
+
         .hero::before {
             content: '';
             position: absolute;
@@ -92,10 +92,10 @@
             pointer-events: none;
         }
 
-        /* Perde Aktifken */
+
         .hero.is-changing::before { opacity: 1; }
 
-        /* İçerik perdenin üstünde kalsın */
+
         .hero h1, .hero p, .categories-wrapper { position: relative; z-index: 2; }
 
         .hero h1 {
@@ -118,7 +118,7 @@
             z-index: 2;
         }
 
-        /* Kategoriler */
+
         .categories-wrapper { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
         .category-tag {
             color: white; text-decoration: none; background: rgba(255,255,255,0.1);
@@ -128,7 +128,7 @@
         .category-tag:hover { background: white; color: var(--primary-bg); }
         .category-tag.active { background: var(--accent); border-color: var(--accent); }
 
-        /* GALERİ */
+
         .content-area { padding: 40px 20px; max-width: 1600px; margin: 0 auto; width: 100%; box-sizing: border-box; }
         .section-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: #888; margin-bottom: 20px; font-weight: 600; }
         .gallery { column-count: 5; column-gap: 20px; }
@@ -151,7 +151,7 @@
         .photo-card:hover .card-overlay { opacity: 1; }
         .author-name { font-size: 12px; font-weight: 600; color: white; }
 
-        /* FOOTER */
+
         footer {
             margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1);
             padding: 40px; text-align: center; color: #666; font-size: 13px; background: #0a1411;
@@ -241,7 +241,7 @@
     </div>
 
     <script>
-        // --- LIGHTBOX İŞLEVLERİ ---
+
         function openLightbox(imageUrl) {
             var lightbox = document.getElementById("myLightbox");
             var lightboxImg = document.getElementById("img01");
@@ -263,9 +263,9 @@
             if (event.key === "Escape") closeLightbox();
         });
 
-        // --- HERO ARKA PLAN DÖNGÜSÜ (DÜZELTİLMİŞ) ---
+
         document.addEventListener("DOMContentLoaded", function() {
-            // Django'dan gelen resim listesi
+
             const heroImages = [
                 {% for h_photo in hero_photos %}
                     "{{ h_photo.image.url }}",
@@ -278,32 +278,30 @@
             const heroSection = document.querySelector('.hero');
             const gradientOverlay = "linear-gradient(rgba(15, 28, 24, 0.5), var(--primary-bg)), ";
 
-            // Arka plan değiştirme fonksiyonu
+
             function changeBackground() {
                 if (heroImages.length > 0) {
-                    // 1. Karart
+
                     heroSection.classList.add('is-changing');
 
-                    // 2. Bekle ve değiştir (800ms)
                     setTimeout(() => {
                         const imageUrl = `url('${heroImages[currentImageIndex]}')`;
                         heroSection.style.backgroundImage = gradientOverlay + imageUrl;
                         
                         currentImageIndex = (currentImageIndex + 1) % heroImages.length;
-                        
-                        // 3. Aydınlat
+
                         heroSection.classList.remove('is-changing');
                     }, 800);
                 }
             }
 
-            // İlk yükleme
+
             if (heroImages.length > 0) {
                 heroSection.style.backgroundImage = gradientOverlay + `url('${heroImages[0]}')`;
                 currentImageIndex = 1; // Bir sonraki resimden başla
             }
 
-            // Döngüyü başlat (Sadece 1'den fazla resim varsa)
+
             if (heroImages.length > 1) {
                 setInterval(changeBackground, 6000); 
             }
