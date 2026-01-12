@@ -94,7 +94,9 @@ If you have Docker installed, you can run the application without installing Pyt
 
 ## 📸 Screenshots
 
-*(You can add screenshots of your project here)*
+
+<img width="1918" height="729" alt="Screenshot 2026-01-12 181309" src="https://github.com/user-attachments/assets/22638330-f5a3-4fef-a444-70efb3d09ecb" />
+<img width="1914" height="826" alt="Screenshot 2026-01-12 181319" src="https://github.com/user-attachments/assets/ff926377-637d-41da-bb95-8b8b62afd9b1" />
 
 ---
 
