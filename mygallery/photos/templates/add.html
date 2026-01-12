@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Upload Photo</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    body { 
+        background: linear-gradient(135deg, #112d20 0%, #1a3c34 100%); 
+        color: white; 
+        font-family: 'Montserrat', sans-serif; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        height: 100vh; 
+        margin: 0; 
+    }
+    .box { 
+        background: rgba(255,255,255,0.1); 
+        padding: 40px; 
+        border-radius: 10px; 
+        width: 400px; 
+        backdrop-filter: blur(5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    
+    /* Form Elemanları */
+    select, textarea { 
+        width: 100%; 
+        padding: 12px; 
+        margin: 8px 0 20px 0; 
+        border-radius: 5px; 
+        border: none; 
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    /* Orijinal Dosya Yükleme Kutusunu Gizle */
+    input[type="file"] {
+        display: none;
+    }
+
+    /* Özel Dosya Yükleme Butonu Tasarımı */
+    .custom-file-upload {
+        display: inline-block;
+        padding: 10px 20px;
+        cursor: pointer;
+        background: white;
+        color: #112d20;
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 14px;
+        transition: background 0.3s;
+        border: 1px solid #ccc;
+        margin-top: 5px;
+    }
+    .custom-file-upload:hover {
+        background: #f0f0f0;
+    }
+
+    /* Yükle Butonu */
+    .btn-submit { 
+        width: 100%; 
+        padding: 12px; 
+        background: #4a7c59; 
+        color: white; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        font-size: 16px; 
+        font-weight: 600; 
+        margin-top: 10px;
+        transition: background 0.3s;
+    }
+    .btn-submit:hover { background: #5da870; }
+    
+    label { font-size: 14px; display: block; color: #ccc; margin-top: 10px;}
+    a { color: #ccc; text-decoration: none; font-size: 14px; }
+    a:hover { color: white; }
+    
+    #file-name {
+        margin-left: 10px;
+        font-size: 13px;
+        color: #e0e0e0;
+        font-style: italic;
+    }
+</style>
+</head>
+<body>
+    <div class="box">
+        <h2 style="text-align: center; margin-top: 0;">Share New Photo</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="id_category">Category:</label>
+            {{ form.category }}
+
+            <label>Image:</label>
+            <label for="id_image" class="custom-file-upload">
+                Choose File
+            </label>
+            <span id="file-name">No file chosen</span>
+            {{ form.image }}
+
+            <label for="id_description">Description:</label>
+            {{ form.description }}
+            
+            <button type="submit" class="btn-submit">Upload</button>
+        </form>
+        
+        <p style="text-align:center; margin-top: 20px;"><a href="/">Cancel</a></p>
+    </div>
+
+    <script>
+        document.getElementById('id_image').onchange = function () {
+            var fileName = this.files[0].name;
+            document.getElementById('file-name').textContent = fileName;
+        };
+    </script>
+</body>
+</html>

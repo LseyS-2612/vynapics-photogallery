@@ -1,0 +1,22 @@
+# Django genel dosyaları
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Medya dosyaları (Kullanıcıların yüklediği fotoğraflar GitHub'a gitmemeli)
+media/
+# Ancak media klasörünün kendisi kalsın istiyorsan içine boş bir .gitkeep koyabilirsin, 
+# ama şimdilik komple hariç tutmak en temizidir.
+
+# Sanal Ortam (Senin bilgisayarına özeldir, hocada çalışmaz)
+venv/
+env/
+.env
+
+# İşletim sistemi dosyaları
+.DS_Store
+Thumbs.db

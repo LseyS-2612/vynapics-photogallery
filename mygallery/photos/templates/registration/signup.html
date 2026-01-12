@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Giriş Yap</title>
+<style>
+    body { background: linear-gradient(135deg, #112d20 0%, #1a3c34 100%); color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+    .box { background: rgba(0,0,0,0.4); padding: 40px; border-radius: 10px; text-align: center; width: 300px; }
+    input { width: 90%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
+    button { width: 100%; padding: 10px; background: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+    a { color: #ccc; text-decoration: none; font-size: 12px; }
+</style>
+</head>
+<body>
+    <div class="box">
+        <h2>Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Enter</button>
+        </form>
+        <p><a href="/login/">Login</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Edit Photo - Vynapics</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+    body { 
+        background: linear-gradient(135deg, #112d20 0%, #1a3c34 100%); 
+        color: white; 
+        font-family: 'Montserrat', sans-serif; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        height: 100vh; 
+        margin: 0; 
+    }
+    .box { 
+        background: rgba(255,255,255,0.1); 
+        padding: 40px; 
+        border-radius: 10px; 
+        width: 400px; 
+        backdrop-filter: blur(5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    input, select, textarea { 
+        width: 100%; 
+        padding: 12px; 
+        margin: 10px 0; 
+        border-radius: 5px; 
+        border: none; 
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+    }
+    button { 
+        width: 100%; 
+        padding: 12px; 
+        background: #4a7c59; 
+        color: white; 
+        border: none; 
+        border-radius: 5px; 
+        cursor: pointer; 
+        font-size: 16px; 
+        font-weight: 600;
+        margin-top: 15px;
+        transition: background 0.3s;
+    }
+    button:hover { background: #5da870; }
+    label { font-size: 14px; margin-top: 10px; display: block; color: #ccc; }
+    a { color: #ccc; text-decoration: none; font-size: 14px; }
+    a:hover { color: white; }
+</style>
+</head>
+<body>
+    <div class="box">
+        <h2 style="text-align: center; margin-top: 0;">Edit Photo Details</h2>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+            
+            <button type="submit">Update Photo</button>
+        </form>
+        
+        <p style="text-align:center; margin-top: 20px;">
+            <a href="/profile/">Cancel</a>
+        </p>
+    </div>
+</body>
+</html>

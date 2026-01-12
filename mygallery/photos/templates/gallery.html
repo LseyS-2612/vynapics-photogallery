@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vynapics | Curated Visuals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&family=Playfair+Display:ital,wght@1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-bg: #0f1c18;
+            --accent: #4a7c59;
+            --text-light: #f5f5f5;
+        }
+
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background-color: var(--primary-bg);
+            margin: 0; 
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(15, 28, 24, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        .logo span { color: var(--accent); }
+
+        .nav-links { display: flex; align-items: center; gap: 20px; }
+        .nav-link { text-decoration: none; color: #aaa; font-size: 14px; font-weight: 500; transition: color 0.3s; }
+        .nav-link:hover { color: white; }
+
+        .btn-primary {
+            background-color: white;
+            color: var(--primary-bg);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover { background-color: #ddd; transform: translateY(-1px); }
+
+        /* HERO SECTION (Animasyonlu Arka Plan) */
+        .hero {
+            position: relative;
+            height: 300px;  /* ESKİSİ: 450px idi. 300px yaptık. */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: var(--primary-bg);
+            background-size: cover;
+            background-position: center;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        /* Siyah Perde (Kararma Efekti İçin) */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--primary-bg);
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 0.8s ease-in-out;
+            pointer-events: none;
+        }
+
+        /* Perde Aktifken */
+        .hero.is-changing::before { opacity: 1; }
+
+        /* İçerik perdenin üstünde kalsın */
+        .hero h1, .hero p, .categories-wrapper { position: relative; z-index: 2; }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem; /* ESKİSİ: 3.5rem idi. Biraz küçülttük. */
+            margin: 0 0 5px 0;
+            font-style: italic;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: relative; 
+            z-index: 2;
+        }
+
+       .hero p {
+            font-size: 1rem; /* ESKİSİ: 1.1rem */
+            color: #ddd;
+            max-width: 600px;
+            margin-bottom: 20px; /* Boşluk azaltıldı */
+            line-height: 1.5;
+            position: relative; 
+            z-index: 2;
+        }
+
+        /* Kategoriler */
+        .categories-wrapper { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        .category-tag {
+            color: white; text-decoration: none; background: rgba(255,255,255,0.1);
+            padding: 8px 16px; border-radius: 30px; font-size: 13px;
+            border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s;
+        }
+        .category-tag:hover { background: white; color: var(--primary-bg); }
+        .category-tag.active { background: var(--accent); border-color: var(--accent); }
+
+        /* GALERİ */
+        .content-area { padding: 40px 20px; max-width: 1600px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+        .section-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; color: #888; margin-bottom: 20px; font-weight: 600; }
+        .gallery { column-count: 5; column-gap: 20px; }
+
+        .photo-card {
+            break-inside: avoid; margin-bottom: 20px; background: #1a1a1a;
+            border-radius: 4px; overflow: hidden; position: relative;
+            cursor: pointer; transition: transform 0.3s;
+        }
+        .photo-card:hover { transform: translateY(-4px); }
+        .photo-card img { width: 100%; display: block; transition: opacity 0.3s; }
+        .photo-card:hover img { opacity: 0.9; }
+
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            opacity: 0; transition: opacity 0.3s; display: flex;
+            justify-content: space-between; align-items: flex-end; box-sizing: border-box;
+        }
+        .photo-card:hover .card-overlay { opacity: 1; }
+        .author-name { font-size: 12px; font-weight: 600; color: white; }
+
+        /* FOOTER */
+        footer {
+            margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 40px; text-align: center; color: #666; font-size: 13px; background: #0a1411;
+        }
+        footer a { color: #888; text-decoration: none; margin: 0 10px; }
+        footer a:hover { color: white; }
+
+        /* LIGHTBOX */
+        .lightbox { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); backdrop-filter: blur(5px); }
+        .lightbox-content { margin: auto; display: block; max-width: 90%; max-height: 85vh; margin-top: 3%; border-radius: 4px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+        .download-btn { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); background: white; color: black; padding: 10px 30px; text-decoration: none; border-radius: 30px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .close { position: absolute; top: 20px; right: 40px; color: #f1f1f1; font-size: 40px; cursor: pointer; }
+
+        @media (max-width: 1024px) { .gallery { column-count: 3; } .hero h1 { font-size: 2.5rem; } }
+        @media (max-width: 600px) { .gallery { column-count: 1; } .navbar { padding: 15px 20px; } .nav-links { gap: 10px; } .logo { font-size: 18px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">VYNAPICS<span>.</span></a>
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <span class="nav-link" style="color: #666;">Hi, {{ user.username }}</span>
+                <a href="/profile/" class="nav-link">Profile</a>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; cursor:pointer;" class="nav-link">Logout</button>
+                </form>
+                <a href="/add/" class="btn-primary">Submit a Photo</a>
+            {% else %}
+                <a href="/login/" class="nav-link">Login</a>
+                <a href="/signup/" class="btn-primary">Join Free</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Visual Storytelling</h1>
+        <p>A curated source of high-quality visuals. Powered by creators, everywhere.</p>
+        
+        <div class="categories-wrapper">
+            <a href="/" class="category-tag {% if not request.GET.category %}active{% endif %}">Editorial</a>
+            {% for category in categories %}
+                <a href="/?category={{ category.name }}" class="category-tag {% if request.GET.category == category.name %}active{% endif %}">
+                    {{ category.name }}
+                </a>
+            {% endfor %}
+        </div>
+    </header>
+
+    <div class="content-area">
+        <div class="section-title">Latest Drops</div>
+        <div class="gallery">
+            {% for photo in photos %}
+            <div class="photo-card" onclick="openLightbox('{{ photo.image.url }}')">
+                <img src="{{ photo.image.url }}" alt="{{ photo.description }}">
+                <div class="card-overlay">
+                    <span class="author-name">@{{ photo.user.username }}</span>
+                    <span class="material-icons" style="color:white; font-size: 20px;">file_download</span>
+                </div>
+            </div>
+            {% empty %}
+            <p style="text-align: center; width: 100%; color: #666; grid-column: 1/-1;">
+                No visuals found. Be the first to submit.
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Vynapics Platform. All rights reserved.</p>
+        <div style="margin-top: 10px;">
+            <a href="#">About</a>
+            <a href="#">License</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">API</a>
+        </div>
+    </footer>
+
+    <div id="myLightbox" class="lightbox">
+        <span class="close" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="img01">
+        <a id="downloadLink" href="#" class="download-btn" download>
+            <span class="material-icons">download</span> Download Free
+        </a>
+    </div>
+
+    <script>
+        // --- LIGHTBOX İŞLEVLERİ ---
+        function openLightbox(imageUrl) {
+            var lightbox = document.getElementById("myLightbox");
+            var lightboxImg = document.getElementById("img01");
+            var downloadLink = document.getElementById("downloadLink");
+            
+            lightbox.style.display = "block";
+            lightboxImg.src = imageUrl;
+            downloadLink.href = imageUrl;
+        }
+
+        function closeLightbox() {
+            document.getElementById("myLightbox").style.display = "none";
+        }
+
+        document.getElementById("myLightbox").addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") closeLightbox();
+        });
+
+        // --- HERO ARKA PLAN DÖNGÜSÜ (DÜZELTİLMİŞ) ---
+        document.addEventListener("DOMContentLoaded", function() {
+            // Django'dan gelen resim listesi
+            const heroImages = [
+                {% for h_photo in hero_photos %}
+                    "{{ h_photo.image.url }}",
+                {% empty %}
+                    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                {% endfor %}
+            ];
+
+            let currentImageIndex = 0;
+            const heroSection = document.querySelector('.hero');
+            const gradientOverlay = "linear-gradient(rgba(15, 28, 24, 0.5), var(--primary-bg)), ";
+
+            // Arka plan değiştirme fonksiyonu
+            function changeBackground() {
+                if (heroImages.length > 0) {
+                    // 1. Karart
+                    heroSection.classList.add('is-changing');
+
+                    // 2. Bekle ve değiştir (800ms)
+                    setTimeout(() => {
+                        const imageUrl = `url('${heroImages[currentImageIndex]}')`;
+                        heroSection.style.backgroundImage = gradientOverlay + imageUrl;
+                        
+                        currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+                        
+                        // 3. Aydınlat
+                        heroSection.classList.remove('is-changing');
+                    }, 800);
+                }
+            }
+
+            // İlk yükleme
+            if (heroImages.length > 0) {
+                heroSection.style.backgroundImage = gradientOverlay + `url('${heroImages[0]}')`;
+                currentImageIndex = 1; // Bir sonraki resimden başla
+            }
+
+            // Döngüyü başlat (Sadece 1'den fazla resim varsa)
+            if (heroImages.length > 1) {
+                setInterval(changeBackground, 6000); 
+            }
+        });
+    </script>
+
+</body>
+</html>
